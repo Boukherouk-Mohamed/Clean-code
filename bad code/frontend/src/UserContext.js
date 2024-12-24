@@ -1,11 +1,8 @@
 
-// UserContext.js
-// Violation: Poorly implemented context
 import React from 'react';
 
 export const UserContext = React.createContext();
 
-// Violation: Provider with no error boundary
 export const UserProvider = ({ children }) => {
   const [state, setState] = useState({
     users: [],
@@ -20,8 +17,7 @@ export const UserProvider = ({ children }) => {
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-// api.js
-// Violation: No error handling, hardcoded URLs
+
 export const api = {
   baseUrl: 'http://localhost:8080',
   
@@ -40,17 +36,13 @@ export const api = {
   }
 };
 
-// utils.js
-// Violation: Poor utility function organization
 export const utils = {
   formatDate: (date) => date.toLocaleDateString(),
   validateEmail: (email) => email.includes('@'),
   calculateAge: (birthDate) => {
-    // Violation: Magic numbers
     const diff = Date.now() - birthDate.getTime();
     return Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
   },
-  // Violation: Inconsistent error handling
   parseUserData: (data) => {
     try {
       return JSON.parse(data);

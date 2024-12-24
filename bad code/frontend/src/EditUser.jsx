@@ -1,8 +1,5 @@
 
-// EditUser.jsx
-// Violation: Duplicated code from AddUser
 export const EditUser = ({ user, setUsers, users, onCancel }) => {
-    // Violation: Copy-pasted state management
     const [name, setName] = useState(user.name || "");
     const [age, setAge] = useState(user.age || "");
     const [email, setEmail] = useState(user.email || "");
@@ -11,7 +8,6 @@ export const EditUser = ({ user, setUsers, users, onCancel }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState(null);
     
-    // Violation: Unnecessary effect
     useEffect(() => {
         if (user) {
             setName(user.name);
@@ -22,7 +18,6 @@ export const EditUser = ({ user, setUsers, users, onCancel }) => {
         }
     }, [user]);
     
-    // Violation: Duplicated validation logic
     const handleUpdate = async (e) => {
         e.preventDefault();
         
@@ -39,7 +34,6 @@ export const EditUser = ({ user, setUsers, users, onCancel }) => {
         try {
             setIsSubmitting(true);
             
-            // Violation: Direct API call
             const response = await fetch(`http://localhost:8080/api/v1/users/${user.id}`, {
                 method: 'PUT',
                 headers: {
@@ -50,10 +44,8 @@ export const EditUser = ({ user, setUsers, users, onCancel }) => {
             
             const updatedUser = await response.json();
             
-            // Violation: Complex state update logic in component
             setUsers(users.map(u => u.id === user.id ? updatedUser : u));
             
-            // Violation: Direct DOM manipulation
             document.getElementById('editForm').style.display = 'none';
             
             onCancel();
@@ -66,7 +58,6 @@ export const EditUser = ({ user, setUsers, users, onCancel }) => {
         }
     };
 
-    // Violation: Duplicated JSX structure
     return (
         <div id="editForm" style={{ 
             position: 'fixed',
