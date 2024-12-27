@@ -2,6 +2,7 @@
 import { useForm } from '../hooks/useForm';
 import { Button } from './common/Button';
 import { Input } from './common/Input';
+import "../index.css"
 
 const validationRules = {
   name: value => value.length < 2 ? 'Name too short' : null,

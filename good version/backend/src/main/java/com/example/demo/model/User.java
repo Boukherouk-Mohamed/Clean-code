@@ -1,29 +1,26 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import java.io.Serializable;
 
-@Entity
-public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+import jakarta.persistence.Id;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@ToString @AllArgsConstructor @NoArgsConstructor
+@Document
+public class User  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
+    private String id;
     private String name;
     private Integer age;
     private Boolean isActive;
 
-    // Getters and setters
-    public Long getId() {
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -43,11 +40,11 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public Boolean getIsActive() {
+    public Boolean getActive() {
         return isActive;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 }

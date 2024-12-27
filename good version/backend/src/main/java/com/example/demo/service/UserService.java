@@ -41,7 +41,7 @@ public class UserService {
      * @throws EntityNotFoundException if user not found
      */
     @Cacheable(value = "users", key = "#id")
-    public User getUserById(Long id) {
+    public User getUserById(String id) {
         Assert.notNull(id, "ID must not be null");
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + id));
@@ -62,7 +62,7 @@ public class UserService {
      */
     @Transactional
     @CacheEvict(value = "users", key = "#id")
-    public User updateUser(Long id, User newUser) {
+    public User updateUser(String id, User newUser) {
         Assert.notNull(id, "ID must not be null");
         validateUser(newUser);
 
@@ -70,7 +70,6 @@ public class UserService {
                 .map(user -> {
                     user.setName(newUser.getName());
                     user.setAge(newUser.getAge());
-                    user.setIsActive(newUser.getIsActive());
                     logger.info("Updating user: {}", id);
                     return userRepository.save(user);
                 })
@@ -83,7 +82,7 @@ public class UserService {
      */
     @Transactional
     @CacheEvict(value = "users", allEntries = true)
-    public void deleteUser(Long id) {
+    public void deleteUser(String id) {
         Assert.notNull(id, "ID must not be null");
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found: " + id);

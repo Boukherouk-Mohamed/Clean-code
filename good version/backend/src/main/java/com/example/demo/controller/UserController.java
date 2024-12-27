@@ -4,8 +4,9 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
+
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @Validated
+@CrossOrigin("*")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
@@ -45,7 +47,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get user by ID")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable String id) {
         try {
             return ResponseEntity.ok(userService.getUserById(id));
         } catch (EntityNotFoundException e) {
@@ -63,7 +65,7 @@ public class UserController {
     @PutMapping("/{id}")
 
     @Operation(summary = "Update existing user")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable String id, @Valid @RequestBody User user) {
         try {
             return ResponseEntity.ok(userService.updateUser(id, user));
         } catch (EntityNotFoundException e) {
@@ -76,7 +78,7 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete user")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         try {
             userService.deleteUser(id);
             return ResponseEntity.noContent().build();
