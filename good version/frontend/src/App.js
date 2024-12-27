@@ -6,7 +6,9 @@ import { AddUser } from './components/AddUser';
 import { EditUser } from './components/EditUser';
 import { UserList } from './components/UserList';
 import { Layout } from './components/Layout';
+import { NotFound } from './components/common/NotFound';
 import { ToastContainer } from 'react-toastify';
+import "./App.css";
 
 const queryClient = new QueryClient();
 
