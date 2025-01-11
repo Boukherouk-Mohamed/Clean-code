@@ -33,6 +33,7 @@ public class DemoApplication {
 // 3. Mixed responsibilities
 @RestController
 @RequestMapping("/api/v1/users")
+@CrossOrigin("*")
 class UserController {
 	// Violation: Field injection instead of constructor injection
 	@Autowired

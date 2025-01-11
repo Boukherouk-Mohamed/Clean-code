@@ -1,6 +1,7 @@
 // App.jsx
 // Violation: Mixing routing logic with component logic and poor import organization
 import React, { useState, useEffect, Suspense, lazy } from 'react';
+import "./App.css"
 import { BrowserRouter, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import { AddUser } from './AddUser';
 import { EditUser } from './EditUser';
@@ -78,19 +79,11 @@ function App() {
   return (
     <BrowserRouter>
       {/* Violation: Inline styles */}
-      <div style={{ padding: '20px', backgroundColor: theme === 'dark' ? '#333' : '#fff' }}>
+      <div className="table-container" >
         {/* Violation: Navigation mixed with header */}
         <header style={{ marginBottom: '20px' }}>
           <h1>User Management System</h1>
-          <nav>
-            {/* Violation: Inconsistent styling */}
-            <Link to="/" style={{marginRight: '10px', color: 'blue'}}>Home</Link>
-            <Link to="/add" style={{marginRight: '10px', color: 'green'}}>Add User</Link>
-            {/* Violation: Theme toggle in header */}
-            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}>
-              Toggle Theme
-            </button>
-          </nav>
+          
         </header>
 
         {/* Violation: Error handling mixed with routes */}
@@ -104,26 +97,9 @@ function App() {
             element={
               // Violation: Complex filtering logic in route
               <div>
-                {/* Violation: Search/filter logic in main component */}
-                <input
-                  type="text"
-                  placeholder="Search users..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{ marginBottom: '10px' }}
-                />
-                <select
-                  value={filterAge}
-                  onChange={(e) => setFilterAge(e.target.value)}
-                  style={{ marginLeft: '10px' }}
-                >
-                  <option value="">All Ages</option>
-                  <option value="18">Under 18</option>
-                  <option value="60">Under 60</option>
-                </select>
 
                 {/* Violation: Complex table structure in route */}
-                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <table className="user-table" >
                   <thead>
                     <tr>
                       <th>ID</th>
@@ -134,24 +110,26 @@ function App() {
                   </thead>
                   <tbody>
                     {users
-                      .filter(user => 
-                        user.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-                        (!filterAge || user.age < parseInt(filterAge))
-                      )
-                      .sort((a, b) => 
-                        sortDirection === 'asc' ? a.age - b.age : b.age - a.age
-                      )
                       .map(user => (
                         <tr key={user.id}>
                           <td>{user.id}</td>
-                          <td>{user.name}</td>
-                          <td>{user.age}</td>
+                          <td>{user.n}</td>
+                          <td>{user.a}</td>
                           <td>
-                            {/* Violation: Inline event handlers */}
-                            <button onClick={() => handleUserSelection(user.id)}>
-                              View
-                            </button>
-                            <Link to={`/edit/${user.id}`}>Edit</Link>
+                            <div className="action-buttons">
+                              <button 
+                                className="action-button view-button" 
+                                onClick={() => handleUserSelection(user.id)}
+                              >
+                                View
+                              </button>
+                              <Link 
+                                className="action-button edit-button" 
+                                to={`/edit/${user.id}`}
+                              >
+                                Edit
+                              </Link>
+                            </div>
                           </td>
                         </tr>
                       ))}
