@@ -2,9 +2,7 @@
 // Violation: No imports organization, mixing default and named imports
 import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from './UserContext'
-import styles from './styles'
-import axios from 'axios'
-import moment from 'moment'
+
 
 // Violation: Duplicate component logic between AddUser and EditUser
 export const AddUser = ({ setUsers, users }) => {

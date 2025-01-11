@@ -1,19 +1,17 @@
 package com.example.demo;
 
-
+import com.example.demo.*;
 // Violation: Unnecessary imports and poor organization
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.demo.model.IUserRepositoryInterface;
+import com.example.demo.model.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
-import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -28,58 +26,6 @@ public class DemoApplication {
 	}
 }
 
-// Violations:
-// 1. Entity mixes persistence and business logic
-// 2. Implements Serializable without versioning
-// 3. Poor encapsulation with public fields
-@Entity
-class User implements Serializable {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long id;
-
-	// Violations:
-	// 1. Cryptic variable names
-	// 2. Public fields violate encapsulation
-	public String n;
-	public Integer a;
-	public Boolean isA;
-
-	// Violations:
-	// 1. Mixed responsibilities (file I/O in entity)
-	// 2. Empty catch block
-	// 3. Resource leak potential
-	public void saveToFile() {
-		try {
-			FileWriter fw = new FileWriter("users.txt", true);
-			fw.write(this.n + "," + this.a + "\n");
-			fw.close();
-		} catch(Exception e) {
-		}
-	}
-
-	// Violation: God method with multiple responsibilities
-	public void processUser() {
-		validateUser();
-		//updateDatabase();
-		//sendEmail();
-		//updateCache();
-		//generateReport();
-	}
-
-	// Violations:
-	// 1. Deep nesting
-	// 2. Empty if block
-	// 3. Poor validation logic
-	private void validateUser() {
-		if(this.n != null && !this.n.isEmpty()) {
-			if(this.a != null && this.a > 0) {
-				if(this.isA != null) {
-				}
-			}
-		}
-	}
-}
 
 // Violations:
 // 1. No service layer
@@ -139,6 +85,7 @@ class UserController {
 		user.n = newUser.n;
 		user.a = newUser.a;
 		userRepo.save(user);
+		DemoApplication.GLOBAL_USER_CACHE.add(user);
 		return "User updated!";
 	}
 
@@ -149,6 +96,7 @@ class UserController {
 	@DeleteMapping("/{id}")
 	public String deleteUser(@PathVariable Long id) {
 		userRepo.deleteById(id);
+		DemoApplication.GLOBAL_USER_CACHE.remove(getUser(id));
 		return "User deleted!";
 	}
 
@@ -183,7 +131,7 @@ class UserController {
 	// 3. No validation
 	@PostMapping("/add")
 	public String addUser(@RequestBody User user) {
-		userRepo.save(user);
+		DemoApplication.GLOBAL_USER_CACHE.add(user);
 		return "Added successfully!";
 	}
 
@@ -207,14 +155,17 @@ class UserController {
 // Violations:
 // 1. Unnecessary interface
 // 2. Poor naming
-interface IUserRepositoryInterface {
-	List<User> findAll();
-}
+//interface IUserRepositoryInterface {
+//	List<User> findAll();
+//}
+
+
 
 // Violations:
 // 1. Multiple inheritance
 // 2. Excessive method name length
 // 3. Poor parameter naming
+@Repository
 interface UserRepository extends JpaRepository<User, Long>, IUserRepositoryInterface {
 
 }

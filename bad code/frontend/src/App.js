@@ -4,9 +4,6 @@ import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import { AddUser } from './AddUser';
 import { EditUser } from './EditUser';
-import styles from './styles.css';
-import axios from 'axios';
-import moment from 'moment';
 import * as _ from 'lodash';
 
 // Violation: Global state management
