@@ -39,17 +39,7 @@ class UserController {
 	@Autowired
 	private UserRepository userRepo;
 
-	// Violations:
-	// 1. Hardcoded credentials
-	// 2. Returns null
-	// 3. Database connection in controller
-	private Connection getConnection() {
-		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "password");
-		} catch(Exception e) {
-			return null;
-		}
-	}
+
 
 	// Violations:
 	// 1. No input validation
