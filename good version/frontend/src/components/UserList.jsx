@@ -4,6 +4,8 @@ import { userService } from '../services/userService';
 import { Link } from 'react-router-dom';
 import { Button } from './common/Button';
 import { useState } from 'react';
+import './UserList.css';
+
 
 export const UserList = () => {
   const [search, setSearch] = useState('');
@@ -52,12 +54,12 @@ export const UserList = () => {
                 <td className="px-6 py-4">{user.name}</td>
                 <td className="px-6 py-4">{user.email}</td>
                 <td className="px-6 py-4">{user.age}</td>
-                <td className="px-6 py-4 text-right space-x-2">
+                <td className="px-6 py-4 text-right space-x-2 button ">
                   <Link to={`/edit/${user.id}`}>
-                    <Button variant="secondary">Edit</Button>
+                    <Button className="secondary" >Edit</Button>
                   </Link>
                   <Button
-                    variant="danger"
+                    className="danger"
                     onClick={() => {
                       if (window.confirm('Delete this user?')) {
                         deleteMutation.mutate(user.id);

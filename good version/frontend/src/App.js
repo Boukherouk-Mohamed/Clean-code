@@ -9,6 +9,7 @@ import { Layout } from './components/Layout';
 import { NotFound } from './components/common/NotFound';
 import { ToastContainer } from 'react-toastify';
 import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const queryClient = new QueryClient();
 

@@ -29,6 +29,7 @@ export const UserForm = ({ initialData, onSubmit, isEdit }) => {
         value={values.name}
         onChange={handleChange}
         error={errors.name}
+        placeholder="Enter your name"
       />
       <Input
         name="age"
@@ -36,6 +37,7 @@ export const UserForm = ({ initialData, onSubmit, isEdit }) => {
         value={values.age}
         onChange={handleChange}
         error={errors.age}
+        placeholder="Enter your age"
       />
       <Input
         name="email"
@@ -43,21 +45,25 @@ export const UserForm = ({ initialData, onSubmit, isEdit }) => {
         value={values.email}
         onChange={handleChange}
         error={errors.email}
+        placeholder="Enter your email"
       />
       <Input
         name="phone"
         type="tel"
         value={values.phone}
         onChange={handleChange}
+        placeholder="Enter your phone number"
       />
       <Input
         name="address"
         value={values.address}
         onChange={handleChange}
+        placeholder="Enter your address"
       />
       <Button type="submit">
         {isEdit ? 'Update User' : 'Add User'}
       </Button>
     </form>
+
   );
 };
